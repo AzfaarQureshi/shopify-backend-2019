@@ -5,7 +5,7 @@ class Resolvers::CreateProduct < GraphQL::Function
 
 	type Types::ProductType
 	def call(_obj, args, ctx)
-		# TODO add error handling
+		return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:current_user].role == "[\"ADMIN_USER\"]"
 		Product.create!(
 			title: args[:title],
 			price: args[:price],

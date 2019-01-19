@@ -4,6 +4,8 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :allProducts, !types[Types::ProductType] do
     argument :available_inventory_only, types.Boolean
     resolve -> (obj, args, ctx) {
+      return GraphQL::ExecutionError.new("Not Authorized to make this request") unless !ctx[:session][:token].empty?
+      Rails.logger.debug ctx[:session][:token]
       if(args[:available_inventory_only])
         return Product.where("inventory_count > ? ", 0)
       else
@@ -15,6 +17,7 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :getProduct, Types::ProductType do
     argument :id, !types.ID
     resolve -> (obj, args, ctx) {
+      return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:session][:token]
       if(Product.exists?(args[:id]))
         return Product.find(args[:id])
       else

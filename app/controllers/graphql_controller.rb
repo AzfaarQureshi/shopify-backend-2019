@@ -13,6 +13,11 @@ class GraphqlController < ApplicationController
 
   private
 
+  def current_cart
+    return unless session[:cart_id]
+    Cart.find_by id: session[:cart_id]
+  end
+
   def current_user
     return unless session[:token]
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))

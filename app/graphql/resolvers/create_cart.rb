@@ -1,0 +1,16 @@
+class Resolvers::CreateCart < GraphQL::Function
+
+	type Types::CartType
+	def call(_obj, args, ctx)
+		cart_status = CartStatus.first
+		cart = Cart.create!(cart_status: cart_status)
+		ctx[:session][:cart_id] = cart.id
+		OpenStruct.new({
+			id: cart.id,
+			subtotal: cart.subtotal,
+			cart_status: cart_status,
+			items: nil
+		})
+
+	end
+end

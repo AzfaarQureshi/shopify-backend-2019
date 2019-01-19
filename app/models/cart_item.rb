@@ -15,6 +15,6 @@ class CartItem < ApplicationRecord
 	  end
 
 	  def set_price
-	  	self[:unit_price] = product.price
+	  	self.unit_price = product.price
 	  end
 end
