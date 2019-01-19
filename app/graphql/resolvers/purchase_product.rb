@@ -4,9 +4,9 @@ class Resolvers::PurchaseProduct < GraphQL::Function
 	type Types::ProductType
 	def call(_obj, args, _ctx)
 		prodToPurchase = Product.find(args[:id])
-		# if nil then return an error
+		# TODO add erorr handling if nil
 		prodToPurchase.inventory_count -= 1
-		prodToPurchase.save! # if not true then return an error
+		prodToPurchase.save! # TODO if not true then return an error
 		return prodToPurchase
 	end
 end
