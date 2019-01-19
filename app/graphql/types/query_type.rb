@@ -2,8 +2,14 @@ Types::QueryType = GraphQL::ObjectType.define do
   name "Query"
 
   field :allProducts, !types[Types::ProductType] do
+    argument :available_inventory_only, types.Boolean
     resolve -> (obj, args, ctx) {
-      Product.all
+      if(args[:available_inventory_only])
+        puts "REACHING ME!"
+        return Product.where("inventory_count > ? ", 0)
+      else
+        return Product.all
+      end
     }
   end
 
