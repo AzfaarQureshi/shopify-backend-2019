@@ -2,13 +2,19 @@ class CartItem < ApplicationRecord
   belongs_to :product
   belongs_to :cart
 
-  validate :product_present
-  validate :order_present
+  validate :cart_present
 
   before_save :set_price
 
-  def unit_price
-  	if persisted?
-  		self[:unit_price]
-  	end
+
+  private
+	  def cart_present
+	  	if cart.nil?
+	  		errors.add(:cart, "is not a valid cart")
+	  	end
+	  end
+
+	  def set_price
+	  	self[:unit_price] = product.price
+	  end
 end

@@ -15,6 +15,6 @@ class Cart < ApplicationRecord
   end
 
   def set_cart_status
-  	self.order_status_id = 1
+  	self.cart_status_id = 1
   end
 end
