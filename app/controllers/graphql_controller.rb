@@ -19,8 +19,8 @@ class GraphqlController < ApplicationController
     token = crypt.decrypt_and_verify(session[:token])
     user_id = token.gsub('user-id:', '').to_i
     User.find_by id: user_id
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    nil
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      nil
   end
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)

@@ -12,12 +12,12 @@ class Resolvers::SignInUser < GraphQL::Function
   def call(_obj, args, ctx)
     input = args[:email]
 
-    return unless input
+    return GraphQL::ExecutionError.new "Email parameter must be given" unless input
 
     user = User.find_by(email: input[:email])
 
-    return unless user
-    return unless user.authenticate(input[:password])
+    return GraphQL::ExecutionError.new "Invalid username or password" unless user
+    return GraphQL::ExecutionError.new "Invalid username or password" unless user.authenticate(input[:password])
 
     # Just some basic token creation for the purposes of demonstration.
     # For a real application I'd use something like JWT for token creation

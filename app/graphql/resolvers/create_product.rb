@@ -4,12 +4,14 @@ class Resolvers::CreateProduct < GraphQL::Function
 	argument :inventory_count, !types.Int
 
 	type Types::ProductType
-	def call(_obj, args, _ctx)
-		# TODO add error handling 
+	def call(_obj, args, ctx)
+		# TODO add error handling
 		Product.create!(
 			title: args[:title],
 			price: args[:price],
 			inventory_count: args[:inventory_count]
 		)
+		rescue ActiveRecord::RecordInvalid => e
+    		GraphQL::ExecutionError.new("Invalid input: #{e.record.errors.full_messages.join(', ')}")
 	end
 end

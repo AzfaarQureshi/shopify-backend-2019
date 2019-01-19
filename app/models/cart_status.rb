@@ -1,0 +1,2 @@
+class CartStatus < ApplicationRecord
+end
