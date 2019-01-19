@@ -24,4 +24,18 @@ Types::QueryType = GraphQL::ObjectType.define do
       end
     }
   end
+
+  field :getCart, Types::CartType do
+    resolve -> (obj, args, ctx) {
+      return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:session][:token]
+      return nil unless ctx[:session][:cart_id]
+      cart = Cart.find(ctx[:session][:cart_id])
+      OpenStruct.new({
+        id: cart.id,
+        subtotal: cart.subtotal,
+        cart_status: cart.cart_status,
+        items: cart.cart_items.collect { |ci| ci.product }
+      })
+    }
+  end
 end
