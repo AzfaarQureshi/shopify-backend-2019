@@ -3,6 +3,7 @@ class Resolvers::PurchaseProduct < GraphQL::Function
 
 	type Types::ProductType
 	def call(_obj, args, _ctx)
+		return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:session][:token]
 		if(Product.exists?(args[:id]))
 			prodToPurchase = Product.find(args[:id])
 			if (prodToPurchase.inventory_count > 0)
