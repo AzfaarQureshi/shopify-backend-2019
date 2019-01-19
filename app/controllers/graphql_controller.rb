@@ -5,7 +5,8 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       session: session,
-      current_user: current_user
+      current_user: current_user,
+      current_cart: current_cart
     }
     result = ShopifyBackendChallengeSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -15,7 +16,7 @@ class GraphqlController < ApplicationController
 
   def current_cart
     return unless session[:cart_id]
-    Cart.find_by id: session[:cart_id]
+    Cart.find_by(id: session[:cart_id], cart_status: CartStatus.first)
   end
 
   def current_user
