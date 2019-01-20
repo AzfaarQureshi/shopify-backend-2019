@@ -1,12 +1,17 @@
-<h2>Azfaar 2019 Backend coding challenge</h2>
+<h4>Azfaar 2019 Backend coding challenge</h2>
+
+
 <p>
 	Hi, thanks for checking my submission out! This is just a barebones landing page. If you would like to start testing the API please head over to
 	<%= link_to "/graphiql", '/graphiql'%>.
 </p>
+
 <p>
-	To checkout documentation and how to test please go visit <a href="https://github.com/AzfaarQureshi/shopify-backend-2019" > github.com/AzfaarQureshi/shopify-backend-2019<a/>
+	To checkout documentation please visit <a href="https://github.com/AzfaarQureshi/shopify-backend-2019" > github.com/AzfaarQureshi/shopify-backend-2019<a/>
 </p>
 
 <p>
 	Thank you!
 </p>
+<h2>IMPORTANT NOTICE: <a style="color:red"> PLEASE READ BEFORE TESTING API </a> </h3>
+<p> As mentioned in the documentation, you need to <b>create a user first</b> to be able to use the API. By default (since the session isnt authorized), all queries except "createUser" will return an "Unauthorized" error showcasing what would happen if someone with an <b>invalid token</b> tries to use the API </p>
