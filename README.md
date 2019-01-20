@@ -10,7 +10,7 @@
 * Create & sign in with Users
 	* using bcrypt gem to encrypt passwords
 	* each user has their own token which uniquely identifies them and their access-scope
-* Unit-tests for basic functionality
+* Unit-tests for basic functionality located in `test/graphql/resolvers`
 	* Creating user, signing in with a user, creating/purchasing/deleting products
 * Purchase products through cart
 	* flow goes: createCart -> addProductsToCart -> checkoutCart
@@ -231,16 +231,55 @@ This page is exposed for the purposes of demonstration and so that you can inter
 	Lets just run it again to make sure it's deleted:
 	![delete again](https://i.imgur.com/JQ1OA7B.png)
 	
-	* Now for purchasing products through the cart. First we must add products to the cart
+	* Now for purchasing products through the cart. First we must add products to the cart:
+	```GraphQL
+	mutation {
+	  addToCart(product_ids: [5,6,7]){
+	    subtotal
+	    items {
+	      title
+	      price
+	      inventory_count
+	    }
+	  }
+	}
+	```
+	![add product to cart](https://i.imgur.com/HYLhXLY.png)
+	* Finally, let's purchase the cart
+	
+	```GraphQL
+	mutation {
+ 	purchaseCart {
+	    subtotal
+	    cart_status {
+	      name
+	    }
+	    items {
+	      price
+	      title
+	    }
+	  }
+	}
+	```
+	![purchase message](https://i.imgur.com/eTUyanG.png)
+	Notice how the `cart_status` is now completed. If we run the same query again we can verify that the cart is no longer in use:
+	![cart no longer in use](https://i.imgur.com/VGkzlbp.png)
+	
+	* We can verify that the inventory_count has changed by running `allProducts` Query again
 ## Documentation
 
 ### GraphQL Schema:
 
-JUST ADD SCREENSHOTS
+* Product
+	![prod](https://i.imgur.com/LJg7nAb.png)
 
+* Cart
+	![cart](https://i.imgur.com/m29RAJn.png)
+	* CartStatus
+		![cartstatus](https://i.imgur.com/bPkgBfv.png)
 ### Queries:
 
-JUST ADD SCREENSHOTS
+![Query](https://i.imgur.com/fM65YBQ.png)
 
 ### Mutations:
-JUST ADD SCREENSHOTS
+![Mutations](https://i.imgur.com/jitvdyZ.png)
