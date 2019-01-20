@@ -275,7 +275,9 @@ This page is exposed for the purposes of demonstration and so that you can inter
 
 * Cart
 	![cart](https://i.imgur.com/m29RAJn.png)
+	
 	* CartStatus
+	
 		![cartstatus](https://i.imgur.com/bPkgBfv.png)
 ### Queries:
 
