@@ -109,15 +109,138 @@ This page is exposed for the purposes of demonstration and so that you can inter
 			}
 		 ```
 	  and now we get:
-	  ![actual response]()
-		
+	  ![actual response](https://i.imgur.com/afTZJFU.png)
+	  
+3. Types of Queries
+	* Notice how the `Wireless mouse` product has inventory 0? We can filter that out with the following:
+		```GraphQL
+			{
+			  allProducts(available_inventory_only: true) {
+			    title
+			    price
+			    inventory_count
+			    id
+			  }
+			}
+		 ```
+	  and now we do not get `wireless mouse` in our example:
+	  ![no inventory items filtered out](https://i.imgur.com/TmWHCIH.png)
+	* We can also get Products one at a time through their ID: 
+	 	```GraphQL
+		{
+		  getProduct(id: 5){
+		    id
+		    title
+		    price
+		    inventory_count
+		  }
+		}
+		```
+	  and we get:
+	  ![prod by id](https://i.imgur.com/lLix3Ya.png)
+	  
+	* We can try `getCart` but since we haven't created a cart yet, we should expect an error. Let's try it:
+		```GraphQL
+		{
+		  getCart {
+		    cart_status {
+		      id
+		      name
+		    }
+		    id
+		    items {
+		      price
+		      title
+		    }
+		    subtotal
+		  }
+		}
+		```
+	  and as expected we get:
+	  ![get cart](https://i.imgur.com/GdRqrfU.png)
+	  
+3. Mutators 
+	* Let's begin by creating an active cart first. 
+		```GraphQL
+		mutation {
+		  createCart {
+		    cart_status {
+		      id
+		      name
+		    }
+		    id
+		    items{
+		      id
+		      title
+		      price
+		    }
+		    subtotal
+		  }
+		}
+		```
+	  and we get:
+	  
+	  ![create cart](https://i.imgur.com/0si5AKC.png)
+	  
+	  The cart will stay "In Progress" until we `checkout` the cart, and then it'll change to "Completed"
+	* We can create a product with: 
+		```GraphQL
+		mutation {
+			createProduct(
+		    title: "mirror"
+		    price: 5.0
+		    inventory_count: 1
+		  ) {
+		    title
+		    id
+		    price
+		    inventory_count
+		  }
+		}
+		```
+	![create product](https://i.imgur.com/cbkQG5v.png)
+	
+	* To demonstrate purchasing a product without having to go through creating a cart -> adding items to a cart -> completing a cart, I added a single `purchaseCart` function. We can also purchase products through the cart which we will do later. Let's purchase this product twice, to see what will happen when the inventory becomes 0.
+	```GraphQL
+	mutation {
+	purchaseProduct(id: 9){
+	    title
+	    inventory_count
+	    id
+	    price
+	  }
+	}
+	```
+	notice how the `inventory_count`, which was 1 previously, decrements to 0:
+	![purchase](https://i.imgur.com/y3ZNxlN.png)
+	Running this again gives us an expected error as you cannot purchase a product with no inventory!
+	![purchase no inventory](https://i.imgur.com/AAm3NPb.png)
+	
+	* Let's delete this product we just created.
+	
+	```GraphQL
+	mutation {
+	deleteProduct(id: 9){
+	    title
+	    price
+	    inventory_count
+	  }
+	}
+	```
+	![delete prod](https://i.imgur.com/GtUOYqp.png)
+	Lets just run it again to make sure it's deleted:
+	![delete again](https://i.imgur.com/JQ1OA7B.png)
+	
+	* Now for purchasing products through the cart. First we must add products to the cart
 ## Documentation
 
 ### GraphQL Schema:
 
-### Queries:
-* allProducts(available_inventory_only: Boolean): ![Product]
-	* `available_inventory_only` is an optional flag with which only products with 
-### Mutations:
+JUST ADD SCREENSHOTS
 
-### User authentication
+### Queries:
+
+JUST ADD SCREENSHOTS
+
+### Mutations:
+JUST ADD SCREENSHOTS
