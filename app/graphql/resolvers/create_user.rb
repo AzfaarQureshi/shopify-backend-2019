@@ -13,7 +13,7 @@ class Resolvers::CreateUser < GraphQL::Function
 
   argument :name, !types.String
   argument :authProvider, !AuthProviderInput
-  argument :role, types[RoleEnum]
+  argument :role, !types[RoleEnum]
 
   type Types::UserType
 
