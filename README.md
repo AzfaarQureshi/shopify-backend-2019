@@ -17,7 +17,7 @@
 
 ## Demo
 
-The demo is available at [azfaarshopify2019.herokuapp.com](http://azfaarshopify2019.herokuapp.com/). 
+The demo is available at <a href="http://azfaarshopify2019.herokuapp.com/" target="_blank">azfaarshopify2019.herokuapp.com</a>. 
 
 _PS: since Heroku automatically sleeps free-tier applications it might take a minute to connect_
 
