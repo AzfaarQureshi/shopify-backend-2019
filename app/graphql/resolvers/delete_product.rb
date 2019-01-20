@@ -2,7 +2,7 @@ class Resolvers::DeleteProduct < GraphQL::Function
 	argument :id, !types.ID
 
 	type Types::ProductType
-	def call(_obj, args, _ctx)
+	def call(_obj, args, ctx)
 		return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:session][:token]
 		return GraphQL::ExecutionError.new("Not Authorized to make this request") unless ctx[:current_user].role == "[\"ADMIN_USER\"]"
 		product = Product.find(args[:id])
